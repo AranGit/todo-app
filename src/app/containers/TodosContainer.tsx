@@ -18,7 +18,7 @@ function TodosContainer() {
 
   const todoCreation = () => {
     if (newTodo) {
-      return <Todo todo={newTodo} action={TodoAction.Creation} />
+      return <Todo todo={newTodo} action={TodoAction.Creation} onClose={() => setNewTodo(null)} />
     } else {
       return null
     }

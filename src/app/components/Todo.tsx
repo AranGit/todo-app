@@ -4,7 +4,15 @@ import { TodoAction, TodoData } from '../data/todo'
 import CheckIcon from '../Icons/CheckIcon'
 import XmarkIcon from '../Icons/XmarkIcon'
 
-function Todo({ todo, className, action, onAction }: { todo: TodoData, className?: string, action: TodoAction, onAction?: any }) {
+function Todo(
+  { todo, className, action, onAction, onClose }:
+    {
+      todo: TodoData,
+      className?: string,
+      action: TodoAction,
+      onAction?: any,
+      onClose?: any
+    }) {
   const [currentAction, setCurrentAction] = useState<TodoAction>(action)
 
   return (
@@ -17,7 +25,7 @@ function Todo({ todo, className, action, onAction }: { todo: TodoData, className
           <button
             className="select-none rounded-lg border border-red-200 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
             type="button"
-            onClick={() => onAction()}
+            onClick={onClose}
           >
             <XmarkIcon />
           </button>
