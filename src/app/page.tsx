@@ -1,4 +1,5 @@
 import Image from "next/image";
+import TodosContainer from "./containers/TodosContainer";
 
 export default function Home() {
   return (
@@ -7,6 +8,9 @@ export default function Home() {
         <h2 className={`mb-3 text-2xl font-semibold`}>
           TODO APP
         </h2>
+      </div>
+      <div className="z-10 max-w-5xl w-full items-center justify-center font-mono text-sm lg:flex">
+        <TodosContainer />
       </div>
     </main>
   );
