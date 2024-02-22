@@ -1,10 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { TodoAction, TodoData } from '../data/todo'
-import CheckIcon from '../Icons/CheckIcon'
-import XmarkIcon from '../Icons/XmarkIcon'
 import PenIcon from '../Icons/PenIcon'
 import TrashIcon from '../Icons/TrashIcon'
+import ConfirmationButtons from './ConfirmationButtons'
 
 function Todo(
   { todo, className, action, onAction, onClose }:
@@ -36,41 +35,17 @@ function Todo(
   const buttons = () => {
     switch (currentAction) {
       case TodoAction.Creation:
-        return <>
-          <button
-            className="select-none rounded-lg border border-red-200 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-            onClick={onClose}
-          >
-            <XmarkIcon />
-          </button>
-          <button
-            className="flex justify-center items-center select-none rounded-lg bg-green-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-            disabled={currentTodo.title === ""}
-            onClick={() => onAction(currentTodo, TodoAction.Creation)}
-          >
-            <CheckIcon />
-          </button>
-        </>
+        return <ConfirmationButtons
+          disabledConfirm={currentTodo.title === ""}
+          onCancel={() => onClose ? onClose() : null}
+          onConfirm={() => onAction(currentTodo, TodoAction.Creation)}
+        />
       case TodoAction.Edit:
-        return <>
-          <button
-            className="select-none rounded-lg border border-red-200 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-gray-900 transition-all hover:opacity-75 focus:ring focus:ring-gray-300 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-            onClick={onCancelEdit}
-          >
-            <XmarkIcon />
-          </button>
-          <button
-            className="flex justify-center items-center select-none rounded-lg bg-green-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-            disabled={currentTodo.title === ""}
-            onClick={() => onUpdateTodo()}
-          >
-            <CheckIcon />
-          </button>
-        </>
+        return <ConfirmationButtons
+          disabledConfirm={currentTodo.title === ""}
+          onCancel={() => onCancelEdit()}
+          onConfirm={() => onUpdateTodo()}
+        />
       default:
         return <>
           <button
