@@ -62,7 +62,7 @@ function TodosContainer() {
         </button>
         {newTodoElement()}
       </div>
-      <div className='flex flex-col justify-center creation-area'>
+      <div className='flex flex-col justify-center border-t-2 border-t-gray-300 pt-4'>
         {
           todos.length <= 0 ? <div className='text-center'>Todo not found</div>
             :
