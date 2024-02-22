@@ -10,15 +10,41 @@ function TodosContainer() {
 
   const onCreate = () => {
     const id = todos.reduce((maxID: number, todo: TodoData) => Math.max(maxID, todo.id), 0)
-    setNewTodo({ id: id, title: "" })
-  }
-  const onClearTodoCreation = () => {
-    setNewTodo(null)
+    setNewTodo({ id: id + 1, title: "" })
   }
 
-  const todoCreation = () => {
+  const onUpdateTodo = (todoUpdated: TodoData, action: TodoAction) => {
+    if (action === TodoAction.Edit) {
+      return setTodos(todos.map((todo: TodoData) => {
+        if (todoUpdated.id === todo.id) {
+          return {
+            ...todo,
+            title: todoUpdated.title
+          }
+        } else {
+          return todo
+        }
+      }))
+    } else if (action === TodoAction.Delete) {
+      console.log("todoUpdated", todoUpdated.id)
+      let updatedTodos = todos.filter((todo: TodoData) => todo.id !== todoUpdated.id)
+      return setTodos(updatedTodos)
+    }
+  }
+
+  console.log("todos", todos)
+
+  const newTodoElement = () => {
     if (newTodo) {
-      return <Todo todo={newTodo} action={TodoAction.Creation} onClose={() => setNewTodo(null)} />
+      return <Todo
+        todo={newTodo}
+        action={TodoAction.Creation}
+        onAction={(todo: TodoData, _action) => {
+          setNewTodo(null)
+          setTodos([...todos, todo])
+        }}
+        onClose={() => setNewTodo(null)}
+      />
     } else {
       return null
     }
@@ -34,14 +60,19 @@ function TodosContainer() {
         >
           <AddIcon /> <span className='ml-2'>CREAT</span>
         </button>
-        {todoCreation()}
+        {newTodoElement()}
       </div>
-      <div className='flex flex-col gap-y-4 justify-center creation-area'>
+      <div className='flex flex-col justify-center creation-area'>
         {
           todos.length <= 0 ? <div className='text-center'>Todo not found</div>
             :
             todos.map((todo: TodoData, index: number) => {
-              return <Todo key={`todo-item-${index}`} todo={todo} action={TodoAction.Idle} />
+              return <Todo
+                key={`todo-item-${index}`}
+                className={`todo-${todo.id}`}
+                todo={todo}
+                action={TodoAction.Idle}
+                onAction={(targetTodo: TodoData, action: TodoAction) => onUpdateTodo(targetTodo, action)} />
             })
         }
       </div>
