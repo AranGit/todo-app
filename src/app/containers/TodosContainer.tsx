@@ -26,13 +26,10 @@ function TodosContainer() {
         }
       }))
     } else if (action === TodoAction.Delete) {
-      console.log("todoUpdated", todoUpdated.id)
       let updatedTodos = todos.filter((todo: TodoData) => todo.id !== todoUpdated.id)
       return setTodos(updatedTodos)
     }
   }
-
-  console.log("todos", todos)
 
   const newTodoElement = () => {
     if (newTodo) {
