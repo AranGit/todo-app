@@ -10,8 +10,3 @@ export enum TodoAction {
   Edit,
   Delete
 }
-
-export interface TodoWithAction {
-  data: TodoData,
-  action: TodoAction
-}
